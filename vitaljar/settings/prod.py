@@ -4,6 +4,9 @@ django_heroku.settings(locals())
 
 DEBUG = False
 
+# Tener cuidado, esto solo es seguro en heroku
+ALLOWED_HOSTS = ['*']
+
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 
 DROPBOX_OAUTH2_TOKEN = os.getenv('DROPBOX_OAUTH2_TOKEN')
