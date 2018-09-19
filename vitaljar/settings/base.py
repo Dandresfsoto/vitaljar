@@ -28,6 +28,16 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+EMAIL_HOST = os.getenv('VITALJAR_EMAIL_HOST')
+EMAIL_PORT = os.getenv('VITALJAR_EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('VITALJAR_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('VITALJAR_EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('VITALJAR_DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = True
+
+ADMINS = [('Diego Fonseca','dandresfsoto2@gmail.com')]
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup',
     'users'
 ]
 
@@ -58,7 +69,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, '../templates')]
         ,
-        'APP_DIRS': True,
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -66,6 +77,13 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'loaders': [
+                ('pypugjs.ext.django.Loader', (
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ))
+            ],
+            'builtins': ['pypugjs.ext.django.templatetags'],
         },
     },
 ]
@@ -113,7 +131,7 @@ AUTH_USER_MODEL = "users.User"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, '../staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../static/'),

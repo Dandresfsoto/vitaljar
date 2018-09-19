@@ -3,6 +3,12 @@ import django_heroku
 django_heroku.settings(locals())
 
 DEBUG = False
+
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+
+DROPBOX_OAUTH2_TOKEN = os.getenv('DROPBOX_OAUTH2_TOKEN')
+DROPBOX_ROOT_PATH = os.getenv('DROPBOX_ROOT_PATH')
+
 SECURE_SSL_REDIRECT  =  True
 SECURE_PROXY_SSL_HEADER  = ('HTTP_X_FORWARDED_PROTO' , 'https')
 SESSION_COOKIE_SECURE = True
